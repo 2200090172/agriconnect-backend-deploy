@@ -22,10 +22,7 @@ public class Financier {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Relationships
-    @OneToMany(mappedBy = "financier", cascade = CascadeType.ALL)
-    private List<Loan> loans;
-
+   
 	public Long getId() {
 		return id;
 	}
@@ -50,13 +47,7 @@ public class Financier {
 		this.email = email;
 	}
 
-	public List<Loan> getLoans() {
-		return loans;
-	}
-
-	public void setLoans(List<Loan> loans) {
-		this.loans = loans;
-	}
+	
 
     // Getters and Setters
 }

@@ -72,4 +72,13 @@ public class FarmerController
 		return farmerService.getexpertresponses(phone);
 	}
 	
+	@GetMapping("/farmerlogout")
+	public int farmerlogout(HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    session.removeAttribute("farmer");
+	    System.out.println("Farmer Session Removed!!");
+	    return 1;
+	}
+
+	
 }

@@ -114,4 +114,13 @@ public class AdminController
     public List<Map<String, Object>> getExpertRequestSolvedData() {
         return adminService.getExpertRequestSolvedData();
     }
+	
+	@GetMapping("/adminlogout")
+	public int adminlogout(HttpServletRequest request)
+	{
+		HttpSession session=request.getSession();
+		session.removeAttribute("admin");
+		System.out.println("Admin Session Removed!!");
+		return 1;
+	}
 }

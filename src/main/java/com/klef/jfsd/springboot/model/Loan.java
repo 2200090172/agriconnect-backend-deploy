@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long loanid;
 
     @Column(nullable = false)
     private String loantype;
@@ -25,18 +25,18 @@ public class Loan {
 
     @Column(nullable = false)
     private Integer repaymentperiod; // In months
+    
+    
+    private String documentsrequired;
 
-    // Relationships
-    @ManyToOne
-    @JoinColumn(name = "financier_id")
-    private Financier financier;
+   
 
 	public Long getId() {
-		return id;
+		return loanid;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.loanid = id;
 	}
 
 	public String getLoantype() {
@@ -71,12 +71,24 @@ public class Loan {
 		this.repaymentperiod = repaymentperiod;
 	}
 
-	public Financier getFinancier() {
-		return financier;
+	
+
+	
+
+	public Long getLoanid() {
+		return loanid;
 	}
 
-	public void setFinancier(Financier financier) {
-		this.financier = financier;
+	public void setLoanid(Long loanid) {
+		this.loanid = loanid;
+	}
+
+	public String getDocumentsrequired() {
+		return documentsrequired;
+	}
+
+	public void setDocumentsrequired(String documentsrequired) {
+		this.documentsrequired = documentsrequired;
 	}
 
     // Getters and Setters

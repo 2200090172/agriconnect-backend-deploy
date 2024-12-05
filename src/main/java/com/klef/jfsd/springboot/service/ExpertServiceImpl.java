@@ -11,16 +11,21 @@ import com.klef.jfsd.springboot.model.Expert;
 import com.klef.jfsd.springboot.model.ExpertResponse;
 import com.klef.jfsd.springboot.model.ExpertSignin;
 import com.klef.jfsd.springboot.model.FarmerRequest;
+import com.klef.jfsd.springboot.model.FarmingContent;
 import com.klef.jfsd.springboot.repository.ExpertRepository;
 import com.klef.jfsd.springboot.repository.ExpertResponseRepository;
 import com.klef.jfsd.springboot.repository.ExpertSigninRepository;
 import com.klef.jfsd.springboot.repository.FarmerRequestRepository;
+import com.klef.jfsd.springboot.repository.FarmingContentRepository;
 
 @Service
 public class ExpertServiceImpl implements ExpertService 
 {
 	@Autowired
 	private ExpertRepository expertRepository;
+	@Autowired
+	private FarmingContentRepository farmingContentRepository;
+	
 	
 	@Autowired
 	private ExpertSigninRepository expertSigninRepository;
@@ -83,6 +88,22 @@ public class ExpertServiceImpl implements ExpertService
 	@Override
 	public List<ExpertResponse> viewexpertresponses(String expertemail) {
 		return expertResponseRepository.getExpertResponses(expertemail);
+	}
+
+	@Override
+	public String insertfarmingcontent(FarmingContent farmingContent) {
+		farmingContentRepository.save(farmingContent);
+		return "Saved Successfully";
+	}
+
+	@Override
+	public List<FarmingContent> getAllFarmingContent() {
+		return (List<FarmingContent>)farmingContentRepository.findAll();
+	}
+
+	@Override
+	public FarmingContent getFarmingContentById(long id) {
+		return farmingContentRepository.findById(id).get();
 	}
 	
 	

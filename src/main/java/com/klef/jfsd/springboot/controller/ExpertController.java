@@ -1,8 +1,14 @@
 package com.klef.jfsd.springboot.controller;
 
+import java.io.ByteArrayInputStream;
+import java.net.URLConnection;
+import java.sql.Blob;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.klef.jfsd.springboot.model.Expert;
 import com.klef.jfsd.springboot.model.ExpertResponse;
 import com.klef.jfsd.springboot.model.FarmerRequest;
+import com.klef.jfsd.springboot.model.FarmingContent;
 import com.klef.jfsd.springboot.service.ExpertService;
 
 import jakarta.mail.internet.MimeMessage;
@@ -25,6 +33,7 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 public class ExpertController 
 {
+	static List<FarmingContent> farmercontentlist;
 	static int otp;
 	@Autowired
 	private ExpertService expertService;
@@ -164,4 +173,79 @@ public class ExpertController
 		 System.out.println("expert email =>"+expertemail);
 		return expertService.viewexpertresponses(expertemail); 
 	 }
+	 
+	 @PostMapping("/insertfarmingcontent")
+	 public String insertFarmingContent(HttpServletRequest request,
+	                                          @RequestParam("title") String title,
+	                                          @RequestParam("description") String description,
+	                                          @RequestParam("author") String author,
+	                                          @RequestParam("contenttype") String contenttype,
+	                                          @RequestParam("category") String category,
+	                                          @RequestParam("media") MultipartFile mediaFile,
+	                                          @RequestParam("createddate") String createddate) throws Exception {
+	     String msg = null;
+	     ModelAndView mv = new ModelAndView();
+
+	     try {
+	         byte[] bytes = mediaFile.getBytes();
+	         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+
+	         // Create FarmingContent object and save it
+	         FarmingContent farmingContent = new FarmingContent();
+	         farmingContent.setTitle(title);
+	         farmingContent.setDescription(description);
+	         farmingContent.setAuthor(author);
+	         farmingContent.setContenttype(contenttype);
+	         farmingContent.setCategory(category);
+	         farmingContent.setCreatedate(new SimpleDateFormat("yyyy-MM-dd").parse(createddate));
+	         farmingContent.setMedia(blob);
+
+	         msg = expertService.insertfarmingcontent(farmingContent); 
+	        
+	     } catch (Exception e) {
+	         msg = e.getMessage();
+	         
+	     }
+	     return msg;
+
+	 }
+	 
+	 @GetMapping("/getAllFarmingContent")
+	 public ResponseEntity<List<FarmingContent>> getAllFarmingContent() {
+	     List<FarmingContent> farmercontentlist = expertService.getAllFarmingContent();
+	     return ResponseEntity.ok(farmercontentlist);
+	 }
+	 
+	 @GetMapping("/getImage/{id}")
+	 public ResponseEntity<byte[]> getImage(@PathVariable Long id) throws Exception {
+	     FarmingContent content = expertService.getFarmingContentById(id);  // Fetch content by ID
+	     
+	     if (content != null && content.getMedia() != null) {
+	         byte[] imageBytes = content.getMedia().getBytes(1, (int) content.getMedia().length());
+	         
+	         // Guess the MIME type from the input stream
+	         String mimeType = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(imageBytes));
+	         if (mimeType == null) {
+	             mimeType = "application/octet-stream";  // Default to binary stream if MIME type is unknown
+	         }
+
+	         return ResponseEntity.ok()
+	                 .contentType(MediaType.parseMediaType(mimeType))
+	                 .body(imageBytes);
+	     }
+	     
+	     return ResponseEntity.notFound().build();  // Return 404 if no image is found
+	 }
+
+
+	 @GetMapping("/expertlogout")
+	 public int expertlogout(HttpServletRequest request)
+	 {
+		 HttpSession session=request.getSession();
+		 session.removeAttribute("expert");
+		 System.out.println("Removing Session => Expert");
+		 return 1;
+	 }
+	 
+
 }
