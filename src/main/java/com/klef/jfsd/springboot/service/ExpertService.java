@@ -19,4 +19,6 @@ public interface ExpertService
    public String insertfarmingcontent(FarmingContent farmingContent);
    public List<FarmingContent> getAllFarmingContent();
    public FarmingContent getFarmingContentById(long id);
+   
+   public int updatepassword(String email, String password);
 }

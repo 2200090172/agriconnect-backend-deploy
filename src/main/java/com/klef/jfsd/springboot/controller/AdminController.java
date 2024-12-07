@@ -1,6 +1,7 @@
 package com.klef.jfsd.springboot.controller;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import com.klef.jfsd.springboot.model.Admin;
 import com.klef.jfsd.springboot.model.Expert;
 import com.klef.jfsd.springboot.model.ExpertSignin;
 import com.klef.jfsd.springboot.model.Farmer;
+import com.klef.jfsd.springboot.model.Financier;
 import com.klef.jfsd.springboot.service.AdminService;
 import com.klef.jfsd.springboot.service.ExpertService;
 import com.klef.jfsd.springboot.service.FarmerRequestService;
+import com.klef.jfsd.springboot.service.FinancierService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +33,8 @@ public class AdminController
 	@Autowired
 	private ExpertService expertService;
 	
+	@Autowired
+	private FinancierService financierService;
 	
 	@GetMapping("/")
 	public String demo()
@@ -121,6 +126,29 @@ public class AdminController
 		HttpSession session=request.getSession();
 		session.removeAttribute("admin");
 		System.out.println("Admin Session Removed!!");
+		return 1;
+	}
+	
+	
+	
+	@PostMapping("/addfinancier")
+	public int addfinancier(@RequestBody Financier financier)
+	{
+		return financierService.addfinancier(financier);
+	}
+	
+	
+	@PostMapping("updatepassword")
+	public int updatepassword(@RequestParam String email, @RequestParam String password, @RequestParam String role)
+	{
+		if(role=="expert")
+		{
+		return expertService.updatepassword(email, password);	
+		}
+		else if(role=="financier")
+		{
+			return financierService.updatepassword(email, password);
+		}
 		return 1;
 	}
 }

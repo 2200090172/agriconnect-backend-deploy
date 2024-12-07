@@ -76,6 +76,14 @@ public class ExpertController
 		return 0;
 	}
 	
+	
+	@PostMapping("/forgotpassword/verifyotp/{eotp}")
+    public int verifyOtp(@PathVariable int eotp) {
+        if (eotp == otp) {
+            return 1; // OTP verified successfully
+        }
+        return 0; // OTP verification failed
+    }
 	@PostMapping("expertsignuprequest")
 	public int expertsignup(@RequestBody Expert expert)
 	{

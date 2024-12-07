@@ -26,7 +26,7 @@ public class Loan {
     @Column(nullable = false)
     private Integer repaymentperiod; // In months
     
-    
+    private String addedby;
     private String documentsrequired;
 
    

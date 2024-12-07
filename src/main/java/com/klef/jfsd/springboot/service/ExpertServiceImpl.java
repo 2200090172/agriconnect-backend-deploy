@@ -105,6 +105,12 @@ public class ExpertServiceImpl implements ExpertService
 	public FarmingContent getFarmingContentById(long id) {
 		return farmingContentRepository.findById(id).get();
 	}
+
+	@Override
+	public int updatepassword(String email, String password) {
+		expertRepository.updatePassword(email, password);
+		return 1;
+	}
 	
 	
 

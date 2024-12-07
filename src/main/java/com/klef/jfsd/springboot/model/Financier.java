@@ -12,24 +12,29 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Financier {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+	
+	
+    
+    
+    private String password;
+    
+    
+    
     @Column(nullable = false)
     private String name;
 
+    @Id
     @Column(nullable = false, unique = true)
     private String email;
+    
+    private String contact;
+    
+    private String organizationname;
+    
+    private String location;
 
    
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 
 	public String getName() {
 		return name;
@@ -45,6 +50,38 @@ public class Financier {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getOrganizationname() {
+		return organizationname;
+	}
+
+	public void setOrganizationname(String organizationname) {
+		this.organizationname = organizationname;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	

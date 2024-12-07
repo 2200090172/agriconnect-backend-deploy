@@ -45,9 +45,44 @@ public class AdminServiceImpl implements AdminService
 	
 	@Override
 	public String addfarmer(Farmer farmer) {
-		farmerRepository.save(farmer);
-		return "Farmer Added Succesfully!!";
+	    // Directly apply encryption logic within this method
+	    
+	    // Step 1: Encrypt the password (first shift by 3 and alternate #, $)
+	    String firstStep = applyShiftAndAlternate(farmer.getPassword(), 3);
+	    
+	    // Step 2: Encrypt the password again (shift by 5 and alternate #, $)
+	    String secondStep = applyShiftAndAlternate(farmer.getPassword(), 5);
+	    
+	    // Concatenate both encrypted parts
+	    String encryptedPassword = firstStep + secondStep;
+
+	    // Set the encrypted password back to the farmer object
+	    farmer.setPassword(encryptedPassword);
+	    
+	    // Save the farmer object with the encrypted password
+	    farmerRepository.save(farmer);
+	    
+	    return "Farmer Added Successfully!!";
 	}
+
+	// Helper method to apply Caesar cipher shift and add #, $ alternately
+	private String applyShiftAndAlternate(String password, int shift) {
+	    StringBuilder result = new StringBuilder();
+	    for (int i = 0; i < password.length(); i++) {
+	        char currentChar = password.charAt(i);
+	        char shiftedChar = (char) (currentChar + shift); // Caesar cipher shift
+	        result.append(shiftedChar);
+	        
+	        // Add # or $ alternately between the characters
+	        if (i % 2 == 0) {
+	            result.append('#');
+	        } else {
+	            result.append('$');
+	        }
+	    }
+	    return result.toString();
+	}
+
 
 	@Override
 	public List<Farmer> viewallfarmers() {
