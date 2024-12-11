@@ -49,7 +49,7 @@ public class FarmerController
 			HttpSession session=request.getSession();
 			session.setAttribute("farmer", farmer);
 			
-//			session.setMaxInactiveInterval(5);
+			session.setMaxInactiveInterval(300);
 			return "Login Success";
 		}
 		else
