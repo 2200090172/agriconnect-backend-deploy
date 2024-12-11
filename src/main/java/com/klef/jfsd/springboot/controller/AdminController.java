@@ -46,34 +46,33 @@ public class AdminController
 	
 
 	@GetMapping("adminlogin")
-public int adminlogin(@RequestParam("username")String uname, @RequestParam("password") String pwd, HttpServletRequest request, HttpServletResponse response) {
-    		System.out.println(uname+" ->"+pwd);
-
-	Admin admin = adminService.adminlogin(uname, pwd);
-    if (admin != null) {
-        HttpSession session = request.getSession();
-        session.setAttribute("admin", admin);
-        
-        // Set cookie to ensure it's sent on subsequent requests
-        response.setHeader("Set-Cookie", "JSESSIONID=" + session.getId() + "; HttpOnly; Secure; SameSite=None");
-        
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
+	public int adminlogin(@RequestParam("username")String uname, @RequestParam("password") String pwd,  HttpServletRequest request)
+	{
+		System.out.println(uname+" ->"+pwd);
+		Admin admin=adminService.adminlogin(uname, pwd);
+		if(admin!=null)
+		{
+			HttpSession session=request.getSession();
+			session.setAttribute("admin", admin);
+//			session.setMaxInactiveInterval(5);
+			
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 	
 	@GetMapping("checkadminsession")
-public int checkadminsession(HttpServletRequest request) {
-    HttpSession session = request.getSession(false); // Don't create a new session
-    if (session != null && session.getAttribute("admin") != null) {
-        System.out.println("Admin session exists: " + session.getId() + " => " + session.getAttribute("admin"));
-        return 1;
-    }
-    System.out.println("Admin session not found: " + (session != null ? session.getId() : "null"));
-    return 0;
-}
+	public int checkadminsession(HttpServletRequest request)
+	{
+		System.out.println("Checking Admin Session :"+request.getRequestId());
+		HttpSession session=request.getSession();
+		if(session!=null)
+			return 1;
+		return 0;
+	}
 
 	@PostMapping("addfarmer")
 	public String addfarmer(@RequestBody Farmer farmer)
