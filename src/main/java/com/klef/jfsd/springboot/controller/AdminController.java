@@ -83,6 +83,8 @@ public class AdminController
 	@PostMapping("addfarmer")
 	public String addfarmer(@RequestBody Farmer farmer)
 	{
+				FarmerController.farmerphone=farmer.getPhone();
+
 		return adminService.addfarmer(farmer);
 	}
 	
@@ -96,6 +98,8 @@ public class AdminController
 	@PostMapping("addexpert")
 	public int addexpert(@RequestBody Expert expert)
 	{
+				ExpertController.expertemail=expert.getEmail();
+
 		System.out.println(expert.getEmail());
 		return adminService.addexpert(expert);
 	}
