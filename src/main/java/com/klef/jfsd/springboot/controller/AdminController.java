@@ -68,7 +68,11 @@ public class AdminController
 				System.out.println("Checking Admin Session");
 		HttpSession session=request.getSession();
 		if(session!=null && session.getAttribute("admin")!=null)
+		{
+			System.out.println("Admin session true : => "+session);
 			return 1;
+		}
+       System.out.println("Admin session false : => "+session);
 		return 0;
 	}
 	
