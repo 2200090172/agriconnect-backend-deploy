@@ -38,7 +38,7 @@ public class ExpertController
 	static List<FarmingContent> farmercontentlist;
 	static int otp;
 		static String expertemail="kavya@gmail.com";
-	static lgsuccess=false;
+	static boolean lgsuccess=false;
 
 	
 	@Autowired
