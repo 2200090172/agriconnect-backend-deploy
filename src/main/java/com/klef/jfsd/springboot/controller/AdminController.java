@@ -53,7 +53,8 @@ public class AdminController
 			HttpSession session=request.getSession();
 			session.setAttribute("admin", admin);
 			session.setMaxInactiveInterval(300);
-			
+			response.setHeader("Set-Cookie", "JSESSIONID=" + session.getId() + "; HttpOnly; Secure; SameSite=None");
+
 			return 1;
 		}
 		else
@@ -63,19 +64,16 @@ public class AdminController
 	}
 	
 	@GetMapping("checkadminsession")
-	public int checkadminsession(HttpServletRequest request)
-	{
-				System.out.println("Checking Admin Session:"+request.getRequestId());
-		HttpSession session=request.getSession();
-		if(session!=null && session.getAttribute("admin")!=null)
-		{
-			System.out.println("Admin session true : => "+session);
-			return 1;
-		}
-       System.out.println("Admin session false : => "+session);
-		return 0;
-	}
-	
+public int checkadminsession(HttpServletRequest request) {
+    HttpSession session = request.getSession(false); // Don't create a new session
+    if (session != null && session.getAttribute("admin") != null) {
+        System.out.println("Admin session exists: " + session.getId() + " => " + session.getAttribute("admin"));
+        return 1;
+    }
+    System.out.println("Admin session not found: " + (session != null ? session.getId() : "null"));
+    return 0;
+}
+
 	@PostMapping("addfarmer")
 	public String addfarmer(@RequestBody Farmer farmer)
 	{
