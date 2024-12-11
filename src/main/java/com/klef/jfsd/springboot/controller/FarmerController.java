@@ -60,6 +60,7 @@ public class FarmerController
 	
 	@GetMapping("checkfarmersession")
 	public int checkFarmerSession(HttpServletRequest request) {
+		System.out.println("Farmer session : "+request.getRequestId());
 	    HttpSession session = request.getSession(false); // Get existing session if available, or return null
 	    if (session != null) {
 	        return 1; // Session is active
