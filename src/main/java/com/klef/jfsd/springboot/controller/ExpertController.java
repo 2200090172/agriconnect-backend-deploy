@@ -29,17 +29,26 @@ import com.klef.jfsd.springboot.service.ExpertService;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import com.klef.jfsd.springboot.repository.ExpertRepository;
+
 
 @RestController
 public class ExpertController 
 {
 	static List<FarmingContent> farmercontentlist;
 	static int otp;
+		static String expertemail="kavya@gmail.com";
+
+	
 	@Autowired
 	private ExpertService expertService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
+
+
+	@Autowired
+	private ExpertRepository expertRepository;
 	
 	
 	@PostMapping("/sendotp/{name}/{toemail}")
@@ -122,24 +131,33 @@ public class ExpertController
     public Expert getexpertprofile(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 //        System.out.println("Session=>"+session);
-        if (session != null) {
-            Expert expert = (Expert) session.getAttribute("expert");
-            System.out.println("Session ID: " + session.getId());
-            System.out.println("Expert in session: " + session.getAttribute("expert"));
-            if (expert != null) {
-                System.out.println("Expert session active: " + expert.getEmail());
-                return expert;
-            } else {
-                System.out.println("Expert session found, but no expert object.");
-                throw new RuntimeException("Expert session not found.");
-            }
+
+
+	    //commenting the bekow lines
+
+        // if (session != null) {
+        //     Expert expert = (Expert) session.getAttribute("expert");
+        //     System.out.println("Session ID: " + session.getId());
+        //     System.out.println("Expert in session: " + session.getAttribute("expert"));
+        //     if (expert != null) {
+        //         System.out.println("Expert session active: " + expert.getEmail());
+        //         return expert;
+        //     } else {
+        //         System.out.println("Expert session found, but no expert object.");
+        //         throw new RuntimeException("Expert session not found.");
+        //     }
             
             
 
-        } else {
-            System.out.println("No active session found.");
-            throw new RuntimeException("No active session.");
-        }
+        // } else {
+        //     System.out.println("No active session found.");
+        //     throw new RuntimeException("No active session.");
+        // }
+
+	    //adding these new lines
+	            return expertRepository.findById(expertemail).get();
+
+	
     }
 	
 
