@@ -20,6 +20,8 @@ import com.klef.jfsd.springboot.service.AdminService;
 import com.klef.jfsd.springboot.service.ExpertService;
 import com.klef.jfsd.springboot.service.FarmerRequestService;
 import com.klef.jfsd.springboot.service.FinancierService;
+import com.klef.jfsd.springboot.model.Financier;
+import com.klef.jfsd.springboot.repository.FinancierRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +37,10 @@ public class AdminController
 	
 	@Autowired
 	private FinancierService financierService;
+
+	
+	@Autowired
+	private FinancierRepository financierRepository;
 	
 	@GetMapping("/")
 	public String demo()
