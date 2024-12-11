@@ -38,6 +38,7 @@ public class ExpertController
 	static List<FarmingContent> farmercontentlist;
 	static int otp;
 		static String expertemail="kavya@gmail.com";
+	static lgsuccess=false;
 
 	
 	@Autowired
@@ -110,11 +111,12 @@ public class ExpertController
 			HttpSession session=request.getSession();
 			session.setAttribute("expert", expert);
 			System.out.println("Session attributes: " + session.getAttributeNames());
-			
+			lgsuccess=true;
 			return 1;
 		}
 		else
 		{
+			lgsuccess=false;
 			return 0;
 		}
 	}
@@ -164,15 +166,23 @@ public class ExpertController
     @GetMapping("checkexpertsession")
     public int checkExpertSession(HttpServletRequest request) {
     	System.out.println("Checking Session");
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            Expert expert = (Expert) session.getAttribute("expert");
-            boolean isActive = expert != null;
-            System.out.println("Session check: " + isActive);
-            return 1;
-        }
-        System.out.println("Session is null.");
-        return 0;
+//commenting the below lines of code
+
+
+        // HttpSession session = request.getSession(false);
+        // if (session != null) {
+        //     Expert expert = (Expert) session.getAttribute("expert");
+        //     boolean isActive = expert != null;
+        //     System.out.println("Session check: " + isActive);
+        //     return 1;
+        // }
+        // System.out.println("Session is null.");
+        // return 0;
+
+//added the below ines of code
+if(lgsuccess)
+	return 1;
+	    return 0;
     }
 
 	 //check here requestId not coming , tomorrow try with sample api that sends only request id=> tha makes help to find problem size
