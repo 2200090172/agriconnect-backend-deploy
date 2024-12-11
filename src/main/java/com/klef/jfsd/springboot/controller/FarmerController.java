@@ -61,7 +61,7 @@ public class FarmerController
 	@GetMapping("checkfarmersession")
 	public int checkFarmerSession(HttpServletRequest request) {
 	    HttpSession session = request.getSession(false); // Get existing session if available, or return null
-	    if (session != null && session.getAttribute("farmer") != null) {
+	    if (session != null) {
 	        return 1; // Session is active
 	    } else {
 	        return 0; // Session is inactive or expired
