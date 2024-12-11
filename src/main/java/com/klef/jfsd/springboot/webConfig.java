@@ -16,7 +16,8 @@ public class webConfig implements WebMvcConfigurer
             .allowedOrigins(
                     "http://localhost:3000",
                     "https://agriconnect-deploy-ihoebi8ze-ch-aravinds-projects-a4857e65.vercel.app",
-                    "https://agriconnect-deploy-rd09qa79o-ch-aravinds-projects-a4857e65.vercel.app"
+                    "https://agriconnect-deploy-rd09qa79o-ch-aravinds-projects-a4857e65.vercel.app",
+                "https://agriconnect-deploy-9cv6hvw8f-ch-aravinds-projects-a4857e65.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
