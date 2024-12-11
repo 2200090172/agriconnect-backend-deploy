@@ -45,8 +45,9 @@ public class FarmerController
 
 	@Autowired
 	private FarmerRepository farmerRepository;
-	
-	private static String farmerphone="7013092476"; 
+
+	private boolean loginsuccess=false;
+	 static String farmerphone="7013092476"; 
 	
 	@GetMapping("farmerlogin")
 public String farmerlogin(@RequestParam("fcontact") String fcontact, @RequestParam("fpwd") String fpwd, HttpServletRequest request) {
@@ -57,8 +58,10 @@ public String farmerlogin(@RequestParam("fcontact") String fcontact, @RequestPar
         session.setAttribute("farmer", farmer);
         session.setMaxInactiveInterval(300);
         System.out.println("Session Created: ID = " + session.getId());
+	    loginsuccess=true;
         return "Login Success";
     } else {
+	    loginsuccess=false;
         System.out.println("Login failed for contact: " + fcontact);
         return "Login Fail";
     }
@@ -67,13 +70,20 @@ public String farmerlogin(@RequestParam("fcontact") String fcontact, @RequestPar
 @GetMapping("checkfarmersession")
 public int checkFarmerSession(HttpServletRequest request) {
     HttpSession session = request.getSession(false);
-    if (session != null) {
-        System.out.println("Active Session ID: " + session.getId());
-        return 1;
-    } else {
-        System.out.println("No Active Session");
-        return 0;
-    }
+
+	//removing beloe ines of code commenting
+    // if (session != null) {
+    //     System.out.println("Active Session ID: " + session.getId());
+    //     return 1;
+    // } else {
+    //     System.out.println("No Active Session");
+    //     return 0;
+    // }
+
+	//added the below line
+	if(loginsuccess)
+		return 1;
+	return 0;
 }
 
 	
