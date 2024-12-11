@@ -44,7 +44,7 @@ public class AdminController
 	
 	
 	@GetMapping("adminlogin")
-	public int adminlogin(@RequestParam("username")String uname, @RequestParam("password") String pwd,  HttpServletRequest request)
+	public int adminlogin(@RequestParam("username")String uname, @RequestParam("password") String pwd,  HttpServletRequest request, HttpServletResponse response)
 	{
 		System.out.println(uname+" ->"+pwd);
 		Admin admin=adminService.adminlogin(uname, pwd);
