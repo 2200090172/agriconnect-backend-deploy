@@ -118,6 +118,7 @@ public int checkFarmerSession(HttpServletRequest request) {
 	
 	@GetMapping("/farmerlogout")
 	public int farmerlogout(HttpServletRequest request) {
+		loginsuccess=false;
 	    HttpSession session = request.getSession();
 	    session.removeAttribute("farmer");
 	    System.out.println("Farmer Session Removed!!");
