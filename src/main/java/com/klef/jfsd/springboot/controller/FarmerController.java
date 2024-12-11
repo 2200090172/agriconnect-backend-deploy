@@ -40,26 +40,33 @@ public class FarmerController
 	private FarmerLoanTableRepository farmerLoanTableRepository;
 	
 	@GetMapping("farmerlogin")
-	public String farmerlogin(@RequestParam("fcontact") String fcontact, @RequestParam("fpwd") String fpwd, HttpServletRequest request)
-	{
-//		System.out.println(fcontact+" "+fpwd);
-		Farmer farmer=farmerService.farmerlogin(fcontact, fpwd);
-		if(farmer!=null)
-		{
-			HttpSession session=request.getSession();
-			session.setAttribute("farmer", farmer);
+public String farmerlogin(@RequestParam("fcontact") String fcontact, @RequestParam("fpwd") String fpwd, HttpServletRequest request) {
+	System.out.println("Farmer Reqesr :"+request.getRequestId());
+    Farmer farmer = farmerService.farmerlogin(fcontact, fpwd);
+    if (farmer != null) {
+        HttpSession session = request.getSession();
+        session.setAttribute("farmer", farmer);
+        session.setMaxInactiveInterval(300);
+        System.out.println("Session Created: ID = " + session.getId());
+        return "Login Success";
+    } else {
+        System.out.println("Login failed for contact: " + fcontact);
+        return "Login Fail";
+    }
+}
 
-			
-			session.setMaxInactiveInterval(300);
-			return "Login Success";
-		}
-		else
-		{
-			
+@GetMapping("checkfarmersession")
+public int checkFarmerSession(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+        System.out.println("Active Session ID: " + session.getId());
+        return 1;
+    } else {
+        System.out.println("No Active Session");
+        return 0;
+    }
+}
 
-			return "Login Fail";
-		}	
-	}
 	
 	@GetMapping("checkfarmersession")
 	public int checkFarmerSession(HttpServletRequest request) {
