@@ -68,19 +68,7 @@ public int checkFarmerSession(HttpServletRequest request) {
 }
 
 	
-	@GetMapping("checkfarmersession")
-	public int checkFarmerSession(HttpServletRequest request) {
-		System.out.println("Farmer session : "+request.getRequestId());
-	    HttpSession session = request.getSession(false); // Get existing session if available, or return null
-	    if (session != null) {
-		    System.out.println("Farmer session is active : "+session.getId());
-	        return 1; // Session is active
-	    } else {
-		    // System.out.println("Farmer session is InACtive : "+session.getId());
-	        return 0; // Session is inactive or expired
-	    }
-	}
-	
+
 	@GetMapping("getfarmerprofile")
 	public Farmer getfarmerprofile(HttpServletRequest request) {
 	    HttpSession session = request.getSession(false); // Get existing session without creating a new one
