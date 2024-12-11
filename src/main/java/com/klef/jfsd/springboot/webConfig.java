@@ -13,7 +13,11 @@ public class webConfig implements WebMvcConfigurer
     public void addCorsMappings(CorsRegistry registry) 
     {
     	registry.addMapping("/**") // Allow CORS 
-                .allowedOrigins("http://localhost:3000","https://agriconnect-deploy-rd09qa79o-ch-aravinds-projects-a4857e65.vercel.app/")
+            .allowedOrigins(
+                    "http://localhost:3000",
+                    "https://agriconnect-deploy-ihoebi8ze-ch-aravinds-projects-a4857e65.vercel.app",
+                    "https://agriconnect-deploy-rd09qa79o-ch-aravinds-projects-a4857e65.vercel.app"
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
