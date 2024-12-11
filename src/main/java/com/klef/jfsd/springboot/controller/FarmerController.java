@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.klef.jfsd.springboot.repository.FarmerRepository;
+
+
 import com.klef.jfsd.springboot.model.ExpertResponse;
 import com.klef.jfsd.springboot.model.Farmer;
 import com.klef.jfsd.springboot.model.FarmerLoanTable;
@@ -38,6 +41,12 @@ public class FarmerController
 	
 	@Autowired
 	private FarmerLoanTableRepository farmerLoanTableRepository;
+
+
+	@Autowired
+	private FarmerRepository farmerRepository;
+	
+	private static String farmerphone="7013092476"; 
 	
 	@GetMapping("farmerlogin")
 public String farmerlogin(@RequestParam("fcontact") String fcontact, @RequestParam("fpwd") String fpwd, HttpServletRequest request) {
@@ -72,16 +81,23 @@ public int checkFarmerSession(HttpServletRequest request) {
 	@GetMapping("getfarmerprofile")
 	public Farmer getfarmerprofile(HttpServletRequest request) {
 	    HttpSession session = request.getSession(false); // Get existing session without creating a new one
-	    if (session != null) {
-	        Farmer farmer = (Farmer) session.getAttribute("farmer");
-	        if (farmer != null) {
-	            return farmer;
-	        } else {
-	            throw new RuntimeException("No farmer profile found in session.");
-	        }
-	    } else {
-	        throw new RuntimeException("Session not found. Please log in.");
-	    }
+
+		//commenting the below ines of code
+	    // if (session != null) {
+	    //     Farmer farmer = (Farmer) session.getAttribute("farmer");
+	    //     if (farmer != null) {
+	    //         return farmer;
+	    //     } else {
+	    //         throw new RuntimeException("No farmer profile found in session.");
+	    //     }
+	    // } else {
+	    //     throw new RuntimeException("Session not found. Please log in.");
+	    // }
+
+		// adding the below lines
+
+			    return (Farmer)farmerRepository.findById(farmerphone).get();
+
 	}
 	
 	@GetMapping("getfarmerresponses")
