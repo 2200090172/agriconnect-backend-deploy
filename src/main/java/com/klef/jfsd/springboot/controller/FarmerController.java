@@ -48,12 +48,15 @@ public class FarmerController
 		{
 			HttpSession session=request.getSession();
 			session.setAttribute("farmer", farmer);
+
 			
 			session.setMaxInactiveInterval(300);
 			return "Login Success";
 		}
 		else
 		{
+			
+
 			return "Login Fail";
 		}	
 	}
@@ -63,8 +66,10 @@ public class FarmerController
 		System.out.println("Farmer session : "+request.getRequestId());
 	    HttpSession session = request.getSession(false); // Get existing session if available, or return null
 	    if (session != null) {
+		    System.out.println("Farmer session is active : "+session.getId());
 	        return 1; // Session is active
 	    } else {
+		    System.out.println("Farmer session is InACtive : "+session.getId());
 	        return 0; // Session is inactive or expired
 	    }
 	}
