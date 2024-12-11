@@ -65,6 +65,7 @@ public class AdminController
 	@GetMapping("checkadminsession")
 	public int checkadminsession(HttpServletRequest request)
 	{
+				System.out.println("Checking Admin Session");
 		HttpSession session=request.getSession();
 		if(session!=null && session.getAttribute("admin")!=null)
 			return 1;
