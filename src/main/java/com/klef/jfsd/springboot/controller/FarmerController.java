@@ -69,7 +69,7 @@ public class FarmerController
 		    System.out.println("Farmer session is active : "+session.getId());
 	        return 1; // Session is active
 	    } else {
-		    System.out.println("Farmer session is InACtive : "+session.getId());
+		    // System.out.println("Farmer session is InACtive : "+session.getId());
 	        return 0; // Session is inactive or expired
 	    }
 	}
