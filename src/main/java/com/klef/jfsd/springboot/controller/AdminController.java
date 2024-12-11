@@ -52,7 +52,7 @@ public class AdminController
 		{
 			HttpSession session=request.getSession();
 			session.setAttribute("admin", admin);
-//			session.setMaxInactiveInterval(5);
+			session.setMaxInactiveInterval(300);
 			
 			return 1;
 		}
