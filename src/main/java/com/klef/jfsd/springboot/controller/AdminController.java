@@ -154,4 +154,11 @@ public class AdminController
 		}
 		return 1;
 	}
+
+
+@GetMapping("viewallfinanciers")
+	public List<Financier> viewallfinanciers()
+	{
+		return (List<Financier>) financierRepository.findAll();
+	}
 }
