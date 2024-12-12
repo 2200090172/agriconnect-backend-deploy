@@ -2,10 +2,13 @@ package com.klef.jfsd.springboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.klef.jfsd.springboot.model.PublicUser;
+import com.klef.jfsd.springboot.repository.PublicUserRepository;  // Added import for PublicUserRepository
 import com.klef.jfsd.springboot.service.PublicService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +19,9 @@ public class PublicController {
 
     @Autowired
     private PublicService publicService;
+    
+    @Autowired
+    private PublicUserRepository publicUserRepository;  // Autowired PublicUserRepository
 
     @GetMapping("/userlogin")
     public String userlogin(@RequestParam(value = "uemail", required = false) String uemail,
@@ -45,4 +51,9 @@ public class PublicController {
         }
     }
 
+    @PostMapping("/addPublic")  // Corrected the path for the POST mapping
+    public String addPublic(@RequestBody PublicUser publicuser) {
+        publicUserRepository.save(publicuser); // Saving user data to the database
+        return "User Added Successfully";
+    }
 }
