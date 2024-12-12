@@ -112,6 +112,7 @@ public class ExpertController
 			session.setAttribute("expert", expert);
 			System.out.println("Session attributes: " + session.getAttributeNames());
 			lgsuccess=true;
+			expertemail=email;
 			return 1;
 		}
 		else
