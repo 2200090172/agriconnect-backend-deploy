@@ -145,6 +145,7 @@ public class AdminController
 		HttpSession session=request.getSession();
 		session.removeAttribute("admin");
 		System.out.println("Admin Session Removed!!");
+		adminloginsuccess=false;
 		return 1;
 	}
 	
