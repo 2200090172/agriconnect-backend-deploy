@@ -41,6 +41,8 @@ public class AdminController
 	
 	@Autowired
 	private FinancierRepository financierRepository;
+
+	static boolean adminloginsuccess=false;
 	
 	@GetMapping("/")
 	public String demo()
@@ -61,11 +63,12 @@ public class AdminController
 			HttpSession session=request.getSession();
 			session.setAttribute("admin", admin);
 //			session.setMaxInactiveInterval(5);
-			
+			adminloginsuccess=true;
 			return 1;
 		}
 		else
 		{
+			adminloginsuccess=false;
 			return 0;
 		}
 	}
@@ -75,7 +78,10 @@ public class AdminController
 	{
 		System.out.println("Checking Admin Session :"+request.getRequestId());
 		HttpSession session=request.getSession();
-		if(session!=null)
+		// if(session!=null)
+		// 	return 1;
+		// return 0;
+		if(adminloginsuccess)
 			return 1;
 		return 0;
 	}
